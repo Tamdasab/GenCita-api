@@ -1,8 +1,8 @@
 import { Citation } from "./citation";
 
 export interface CitationService{
-    add(text: string, category:string): Citation;
-    getById(id: number): Citation | null;
+    add(text: string, category:string): Promise<Citation>;
+    getById(id: number): Promise<Citation | null>;
     delete(id: number): void;
-    getByCategory(category: string): Citation[];
+    //getByCategory(category: string): Promise<Citation[]>;
 }

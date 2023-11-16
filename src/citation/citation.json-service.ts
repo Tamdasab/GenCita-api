@@ -2,17 +2,45 @@ import { Citation } from "./citation";
 import { CitationService } from "./citation.service";
 
 export class CitationJSONService implements CitationService{
-    add(text: string, category: string): Citation {
-        throw new Error("");
+
+
+   async add(text: string, category: string): Promise<Citation> {
+        const newCitation = await Citation.create({
+            text,
+            category,
+        });
+
+        return newCitation.toJSON() as Citation;
+        
     }
-    getById(id: number): Citation | null {
-        throw new Error("");
-    }
-    delete(id: number): void {
-        throw new Error("");
-    }
-    getByCategory(category: string): Citation[] {
-        throw new Error("");
+
+    async getById(id: number): Promise<Citation | null> {
+        const citation = await Citation.findByPk(id);
+
+        return citation ? citation.toJSON() as Citation : null;
+        
     }
     
+    async delete(id: number): Promise<void> {
+        await Citation.destroy({
+            where: {
+                id,
+            },
+        });
+        
+    }
+    //async getByCategory(category: string): Promise<Citation[]> {
+    //    const citations = await Citation.findAll({
+    //        where: {
+    //            category,
+    //        },
+    //    });
+//
+    //    return citations.map(c => {
+    //        c.toJSON() as Citation;
+    //    });
+    //    
+    //}
+
+
 }

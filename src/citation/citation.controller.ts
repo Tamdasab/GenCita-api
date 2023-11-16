@@ -5,20 +5,20 @@ import { CitationService } from "./citation.service";
 export class CitationController{
     constructor(private citationservice: CitationService){}
 
-    add(text: string, category: string): Citation{
+    async add(text: string, category: string): Promise<Citation>{
         if(isEmpty(text, category)){
             throw new Error("text and category is not defined");
         }
 
-        const newCitation = this.citationservice.add(text, category);
+        const mynewCitation = this.citationservice.add(text, category);
 
-        if(!newCitation){
+        if(!mynewCitation){
             throw new Error("the new citation is not correctely created");
         }
-        return newCitation;
+        return mynewCitation;
     }
 
-    getById(id: number): Citation | null{
+    async getById(id: number): Promise<Citation | null>{
         if(isNegative(id)){
             throw new Error("given id is negative");
         }
@@ -37,18 +37,18 @@ export class CitationController{
         }
         this.citationservice.delete(id);
     }
-
-    getByCategory(category: string): Citation[]{
-        if(CategoryIsNotDefined(category)){
-            throw new Error("given category is empty");
-        }
-
-        const citations = this.citationservice.getByCategory(category);
-
-        if(citations.length === 0){
-            return [];
-        }
-
-        return citations;
-    }
+//
+    //async getByCategory(category: string): Promise<Citation[]>{
+    //    if(CategoryIsNotDefined(category)){
+    //        throw new Error("given category is empty");
+    //    }
+//
+    //    const citations = this.citationservice.getByCategory(category);
+//
+    //    if( (await citations).length === 0){
+    //        return [];
+    //    }
+//
+    //    return citations;
+    //}
 }
