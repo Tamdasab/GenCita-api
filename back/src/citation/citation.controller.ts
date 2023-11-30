@@ -37,18 +37,18 @@ export class CitationController{
         }
         this.citationservice.delete(id);
     }
-//
-    //async getByCategory(category: string): Promise<Citation[]>{
-    //    if(CategoryIsNotDefined(category)){
-    //        throw new Error("given category is empty");
-    //    }
-//
-    //    const citations = this.citationservice.getByCategory(category);
-//
-    //    if( (await citations).length === 0){
-    //        return [];
-    //    }
-//
-    //    return citations;
-    //}
+
+    async getByCategory(category: string): Promise<Citation[]>{
+        if(CategoryIsNotDefined(category)){
+            throw new Error("given category is empty");
+        }
+
+        const citations = this.citationservice.getByCategory(category);
+
+        if( (await citations).length === 0){
+            return [];
+        }
+
+        return citations;
+    }
 }
