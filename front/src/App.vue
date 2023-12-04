@@ -1,12 +1,15 @@
+<template>
+  <div class="app">
+    hello GenCita
+  </div>
+
+</template>
+
 <script setup lang="ts">
 
 
 </script>
 
-<template>
-  hello GenCita
-
-</template>
 
 <style scoped>
 
