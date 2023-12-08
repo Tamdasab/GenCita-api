@@ -19,16 +19,20 @@ export class CitationController{
     }
 
     async getById(id: number): Promise<Citation | null>{
-        if(isNegative(id)){
-            throw new Error("given id is negative");
+        try{
+            if(isNegative(id)){
+                throw new Error("given id is negative");
+            }
+        
+            const myId = this.citationservice.getById(id);
+        
+            if(!myId){
+                throw new Error("the id is null");
+            }
+            return myId;
+        }catch(error){
+            throw error;
         }
-
-        const myId = this.citationservice.getById(id);
-
-        if(!myId){
-            throw new Error("the id is null");
-        }
-        return myId;
     }
 
     delete(id: number): void{
@@ -39,16 +43,22 @@ export class CitationController{
     }
 
     async getByCategory(category: string): Promise<Citation[]>{
-        if(CategoryIsNotDefined(category)){
-            throw new Error("given category is empty");
+
+        try{
+            if(CategoryIsNotDefined(category)){
+                throw new Error("given category is empty");
+            }
+
+            const citations = await this.citationservice.getByCategory(category);
+
+            if( (citations).length === 0){
+                return [];
+            }
+
+            return citations;
+        }catch(error){
+            console.error("Error in getByCategory:", error);
+            throw error;
         }
-
-        const citations = this.citationservice.getByCategory(category);
-
-        if( (await citations).length === 0){
-            return [];
-        }
-
-        return citations;
     }
 }
