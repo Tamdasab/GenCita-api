@@ -5,11 +5,6 @@ export class Citation extends Model {}
 
 Citation.init(
     {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
         text: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -25,7 +20,7 @@ Citation.init(
     },
     {
         sequelize: db,
-        modelName: 'Citation',
+        modelName: 'Citations',
         tableName: 'citations',
         timestamps: false,
     }
