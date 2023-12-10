@@ -1,0 +1,249 @@
+:root {
+	--primary: #EA40A4;
+	--business: #3A82EE;
+	--personal: var(--primary);
+	--light: #eeeeee;
+	--grey: #888;
+	--dark: #313154;
+	--danger: #ff5b57;
+
+	--shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+	--business-glow: 0px 0px 4px rgba(58, 130, 238, 0.75);
+	--personal-glow: 0px 0px 4px rgba(234, 64, 164, 0.75);
+}
+
+* {	
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'montserrat', sans-serif;
+}
+
+input:not([type="radio"]):not([type="checkbox"]), button {
+	appearance: none;
+	outline: none;
+	background: none;
+	cursor: initial;
+}
+
+body {
+	margin-top: 40px;
+	background: var(--light);
+	color: var(--dark);
+}
+
+div {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	padding-left: .5rem;
+	padding-right: .5em;
+}
+
+h3 {
+	color: var(--dark);
+	font-size: 1rem;
+	font-weight: 400;
+	margin-bottom: 0.5rem;
+}
+
+h4 {
+	color: var(--grey);
+	font-size: 0.875rem;
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 20px;
+}
+  
+.bar {
+	margin-right: 10px;
+}
+  
+.sabrina {
+	padding: 10px;
+	font-size: 16px;
+	border: 2px solid rgb(175, 76, 137);
+	border-radius: 5px;
+	width: 300px;
+}
+  
+.button button {
+	padding: 10px 20px;
+	font-size: 16px;
+	background-color: rgb(175, 76, 137);
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+  
+.button button:hover {	
+	background-color: #9c9781;
+}
+
+.create-citation input[type="text"] {
+	display: block;
+	width: 100%;
+	font-size: 1.125rem;
+	padding: 1rem 1.5rem;
+	color: var(--dark);
+	background-color: #FFF;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	margin-bottom: 1.5rem;
+}
+
+.create-citation .options {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.create-citation .options label {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	background-color: #FFF;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+	display: none;
+}
+
+.bubble {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid var(--business);
+	box-shadow: var(--business-glow);
+}
+
+/*.bubble.personal {
+	border-color: var(--personal);
+	box-shadow: var(--personal-glow);
+}
+
+.bubble::after {
+	content: "";
+	display: block;
+	opacity: 0;
+	width: 0px;
+	height: 0px;
+	background-color: var(--business);
+	box-shadow: var(--business-glow);
+	border-radius: 50%;
+	transition: 0.2s ease-in-out;
+}
+
+.bubble.personal::after {
+	background-color: var(--personal);
+	box-shadow: var(--personal-glow);
+}*/
+
+input:checked ~ .bubble::after {
+	width: 10px;
+	height: 10px;
+	opacity: 1;
+}
+
+.create-citation .options label div {
+	color: var(--dark);
+	font-size: 1.125rem;
+	margin-top: 1rem;
+}
+
+.create-citation input[type="submit"] {
+	margin-left: 25%;
+	display: block;
+	width: 50%;
+	font-size: 1.125rem;
+	padding: 1rem 1.5rem;
+	color: #FFF;
+	background-color: var(--primary);
+	border-radius: 0.5rem;
+	box-shadow: var(--personal-glow);
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.create-citation input[type="submit"]:hover {
+	opacity: 0.75;
+}
+
+.citation-list .list {
+	margin: 1rem 0;
+} 
+
+.citation-list .citation-item {
+	display: flex;
+	align-items: center;
+	background-color: #FFF;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	margin-bottom: 1rem;
+}
+
+.citation-item label {
+	display: block;
+	margin-right: 1rem;
+	cursor: pointer;
+}
+
+.citation-item .citation-content {
+	flex: 1 1 0%;
+}
+
+.citation-item .citation-content input {
+	color: var(--dark);
+	font-size: 1.125rem;
+}
+
+.citation-item .actions {
+	display: flex;
+	align-items: center;
+}
+
+.citation-item .actions button {
+	display: block;
+	padding: 0.5rem;
+	border-radius: 0.25rem;
+	color: #FFF;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.citation-item .actions button:hover {
+	opacity: 0.75;
+}
+
+.citation-item .actions .edit {
+	margin-right: 0.5rem;
+	background-color: var(--primary);
+}
+
+.citation-item .actions .delete {
+	background-color: var(--danger);
+}
+
+.citation-item.done .citation-content input {
+	text-decoration: line-through;
+	color: var(--grey);
+}
