@@ -1,12 +1,13 @@
 <template>
-  <div class="app">
-    hello GenCita
-  </div>
+  
+  <main class="app">
+    <RouterView/>
+  </main>
 
 </template>
 
 <script setup lang="ts">
-
+import { RouterView } from 'vue-router'
 
 </script>
 
