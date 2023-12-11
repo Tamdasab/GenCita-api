@@ -35,7 +35,7 @@ export class CitationRouter{
                 })
 
             }catch(error: unknown){
-                console.error('error in catecory rout', error);
+                //console.error('error in catecory rout', error);
                 next(error);
             };
         })
