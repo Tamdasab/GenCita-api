@@ -18,6 +18,15 @@ export class CitationController{
         return mynewCitation;
     }
 
+    async getAllCitation(): Promise<Citation[]> {
+        try{
+            const allCitation = await this.citationservice.getAllCitation()
+            return allCitation;
+        }catch(error){
+            throw error
+        }
+    }
+
     async getById(id: number): Promise<Citation | null>{
         try{
             if(isNegative(id)){

@@ -9,6 +9,17 @@ export class CitationRouter{
     }
 
     private configureRoutes(): void{
+        this.router.get('/all-citations', (req, res, next) => {
+            try{
+                this.citationcontroller.getAllCitation()
+                .then(result => {
+                    res.status(200).json(result);
+                })
+            }catch(error: unknown){
+                next(error);
+            }
+        })
+
         this.router.get('/id/:id', (req, res, next) => {
             try{
                 this.citationcontroller.getById(
@@ -45,7 +56,7 @@ export class CitationRouter{
                 this.citationcontroller.add(
                     req.body.text, req.body.category
                     ).then(result => {
-                                res.status(201).json(result);
+                    res.status(201).json(result);
                 })
             }catch(error: unknown){
                 next(error);
