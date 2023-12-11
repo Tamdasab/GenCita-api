@@ -17,6 +17,19 @@ export class CitationJSONService implements CitationService{
         }
     }
 
+    async getAllCitation(): Promise<Citation[]> {
+        try{
+            const citations = await Citation.findAll();
+            console.log("my citations found:", citations);
+
+            const arrayCitations = citations.map(c => c.toJSON() as Citation);
+            return arrayCitations;
+        }catch (error){
+            throw error;
+        }
+        
+    };
+
     async getById(id: number): Promise<Citation | null> {
         try{
             const citation = await Citation.findByPk(
