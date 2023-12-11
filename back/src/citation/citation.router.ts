@@ -9,35 +9,44 @@ export class CitationRouter{
     }
 
     private configureRoutes(): void{
-        this.router.get('/:id', (req, res, next) => {
+        this.router.get('/id/:id', (req, res, next) => {
             try{
-                const result = this.citationcontroller.getById(
+                this.citationcontroller.getById(
                     parseInt(req.params.id)
-                )
+                ).then(result => {
                 res.status(200).json(result);
+                })
             }catch(error: unknown){
                 next(error);
             };
             
         })
 
-        this.router.get('/:category', (req, res, next) => {
+        this.router.get('/category/:category', (req, res, next) => {
             try{
-                const result = this.citationcontroller.getByCategory(
-                    req.params.category
-                )
-                res.status(200).json(result);
+                const categoryparam = req.params.category;
+                console.log("CategoryParam", categoryparam);
+
+                this.citationcontroller.getByCategory(
+                    categoryparam
+                ).then(rep => {
+                    console.log("response :", rep);
+                    res.status(200).json(rep);
+                })
+
             }catch(error: unknown){
+                console.error('error in catecory rout', error);
                 next(error);
             };
         })
 
         this.router.post('/add-citation', (req, res, next) => {
             try{
-                const result = this.citationcontroller.add(
+                this.citationcontroller.add(
                     req.body.text, req.body.category
-                    )
-                res.status(201).json(result);
+                    ).then(result => {
+                                res.status(201).json(result);
+                })
             }catch(error: unknown){
                 next(error);
             }
