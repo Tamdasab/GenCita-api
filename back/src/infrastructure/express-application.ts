@@ -6,6 +6,7 @@ import { CitationJSONService } from "../citation/citation.json-service";
 import db from "../config/database.config";
 
 export class ExpressAplication{
+    private allowedMainOrigin!: string;
     private server!: ExpressServer;
     private expressrouter!: ExpressRouter;
     private citationservice!: CitationService;
@@ -23,7 +24,7 @@ export class ExpressAplication{
     
     private configureAplication() {
         this.configureEnv();
-        this.configureServerPort();
+        this.configureVariable();
         this.configureServices();
         this.configureExpressRouter();
         this.configureExpressServer();
@@ -36,6 +37,24 @@ export class ExpressAplication{
         dotenv.config({
             path: '.env'
         })
+    }
+
+    private configureVariable(): void {
+        this.configureAllowedMainOrigin();
+        this.configureServerPort();
+    }
+
+    private configureAllowedMainOrigin(): void {
+        this.allowedMainOrigin = this.getAllowedMainOrigin();
+    }
+
+    private getAllowedMainOrigin(): string {
+        const allowedMainOrigin = process.env.ALLOWED_MAIN_ORIGIN;
+        if (!allowedMainOrigin) {
+            throw new Error('No allowed main origin was found in env file.')
+        };
+
+        return allowedMainOrigin;
     }
 
     private configureServerPort(): void {
@@ -51,7 +70,10 @@ export class ExpressAplication{
     }
 
     private configureExpressServer(): void {
-        this.server = new ExpressServer(this.expressrouter, this.port);
+        this.server = new ExpressServer(
+                this.allowedMainOrigin,
+                this.expressrouter, 
+                this.port);
     }
 
     private configDb() {
