@@ -29,22 +29,6 @@ export class CitationJSONService implements CitationService{
         }
         
     };
-
-    async getCategory(): Promise<string[]> {
-        try{
-            const categories = await Citation.findAll({
-                attributes: ['category'],
-                group: ['category'],
-            });
-            console.log("my citations found:", categories);
-
-            const arrayCategory = categories.map(c => c.toJSON() as string);
-            return arrayCategory;
-        }catch (error){
-            throw error;
-        }
-        
-    };
     
     async delete(id: number): Promise<void> {
         try{
