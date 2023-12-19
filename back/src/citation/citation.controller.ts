@@ -25,24 +25,16 @@ export class CitationController{
         }catch(error){
             throw error
         }
-    }
+    };
 
-    async getById(id: number): Promise<Citation | null>{
+    async getCategory(): Promise<string[]> {
         try{
-            if(isNegative(id)){
-                throw new Error("given id is negative");
-            }
-        
-            const myId = this.citationservice.getById(id);
-        
-            if(!myId){
-                throw new Error("the id is null");
-            }
-            return myId;
+            const category = await this.citationservice.getCategory()
+            return category;
         }catch(error){
-            throw error;
+            throw error
         }
-    }
+    };
 
     delete(id: number): void{
         if(IdIsNotDefined(id)){
