@@ -1,6 +1,5 @@
 :root {
-	--primary: #EA40A4;
-	--business: #3A82EE;
+	--primary: #3A82EE;
 	--personal: var(--primary);
 	--light: #eeeeee;
 	--grey: #888;
@@ -9,8 +8,6 @@
 
 	--shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
-	--business-glow: 0px 0px 4px rgba(58, 130, 238, 0.75);
-	--personal-glow: 0px 0px 4px rgba(234, 64, 164, 0.75);
 }
 
 * {	
@@ -20,8 +17,9 @@
 	font-family: 'montserrat', sans-serif;
 }
 
-input:not([type="radio"]):not([type="checkbox"]), button {
+button {
 	appearance: none;
+	border: none;
 	outline: none;
 	background: none;
 	cursor: initial;
@@ -65,18 +63,18 @@ h4 {
 	margin-right: 10px;
 }
   
-.sabrina {
+.inp {
 	padding: 10px;
 	font-size: 16px;
-	border: 2px solid rgb(175, 76, 137);
-	border-radius: 5px;
+	border: none;
+	border-radius: 0.5rem;
 	width: 300px;
 }
   
 .button button {
 	padding: 10px 20px;
 	font-size: 16px;
-	background-color: rgb(175, 76, 137);
+	background-color: #3A82EE;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
@@ -85,7 +83,7 @@ h4 {
 }
   
 .button button:hover {	
-	background-color: #9c9781;
+	background-color: #6abfe3;
 }
 
 .create-citation input[type="text"] {
@@ -95,81 +93,30 @@ h4 {
 	padding: 1rem 1.5rem;
 	color: var(--dark);
 	background-color: #FFF;
+	border: none;
 	border-radius: 0.5rem;
 	box-shadow: var(--shadow);
 	margin-bottom: 1.5rem;
 }
 
 .create-citation .options {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 1rem;
 	margin-bottom: 1.5rem;
 }
 
-.create-citation .options label {
+.create-citation .options div input {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 1.5rem;
+	width: 20em;
+	margin-left: 38%;
 	background-color: #FFF;
 	border-radius: 0.5rem;
 	box-shadow: var(--shadow);
-	cursor: pointer;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-	display: none;
-}
 
-.bubble {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	border: 2px solid var(--business);
-	box-shadow: var(--business-glow);
-}
-
-/*.bubble.personal {
-	border-color: var(--personal);
-	box-shadow: var(--personal-glow);
-}
-
-.bubble::after {
-	content: "";
-	display: block;
-	opacity: 0;
-	width: 0px;
-	height: 0px;
-	background-color: var(--business);
-	box-shadow: var(--business-glow);
-	border-radius: 50%;
-	transition: 0.2s ease-in-out;
-}
-
-.bubble.personal::after {
-	background-color: var(--personal);
-	box-shadow: var(--personal-glow);
-}*/
-
-input:checked ~ .bubble::after {
-	width: 10px;
-	height: 10px;
-	opacity: 1;
-}
-
-.create-citation .options label div {
-	color: var(--dark);
-	font-size: 1.125rem;
-	margin-top: 1rem;
-}
-
-.create-citation input[type="submit"] {
+.create-citation button {
 	margin-left: 25%;
 	display: block;
 	width: 50%;
@@ -183,7 +130,7 @@ input:checked ~ .bubble::after {
 	transition: 0.2s ease-in-out;
 }
 
-.create-citation input[type="submit"]:hover {
+.create-citation button:hover {
 	opacity: 0.75;
 }
 

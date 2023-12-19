@@ -2,7 +2,6 @@ import express  from 'express';
 import cors, { CorsOptions } from 'cors';
 import { ExpressRouter } from './express.router';
 import bodyParser from 'body-parser';
-import { error } from 'console';
 
 export class ExpressServer{
     private express = express();
@@ -23,22 +22,25 @@ export class ExpressServer{
 
     private configureServer(): void{
         this.configureBodyParser();
-        this.configureRoutes();
         this.configureCorsPolicy();
+        this.configureRoutes();
     }
 
     private configureCorsPolicy(): void{
-        const corsOptions: CorsOptions = {
-            origin: (origin, callback) => {
-                const isOriginAllowed =
-                    !origin || this.allowedMainOrigin === origin;
-                
-                if (isOriginAllowed) {
-                    callback(null, true);
-                } else{
-                    callback(new Error('CORS: Request origin is not allowed'));
-                }
-            }
+        const corsOptions: cors.CorsOptions = {
+            origin: '*',
+            //origin: (origin, callback) => {
+            //    const isOriginAllowed =
+            //        !origin || this.allowedMainOrigin === origin;
+            //    
+            //    if (isOriginAllowed) {
+            //        callback(null, true);
+            //    } else{
+            //        callback(new Error('CORS: Request origin is not allowed'));
+            //    }
+            //},
+            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+            optionsSuccessStatus: 204,
         }
 
         this.express.use(cors(corsOptions));

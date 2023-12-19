@@ -1,4 +1,4 @@
-import { Router } from "express";
+import express, { Router,  } from "express";
 import { CitationService } from "../citation/citation.service";
 import { CitationController } from "../citation/citation.controller";
 import { CitationRouter } from "../citation/citation.router";
@@ -21,6 +21,7 @@ export class ExpressRouter{
     }
 
     private configureRouter(): void {
+        this.router.use(express.json());
         this.citationrouter = new CitationRouter(this.citationcontroller);
     }
 

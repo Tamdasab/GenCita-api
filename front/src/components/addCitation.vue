@@ -2,106 +2,88 @@
     <div class="create-citation">
         <h3>CREATE YOUR CITATION</h3>
 
-        <form id="new-citation-form" @sublit.prevent="addCitation">
+        <div id="new-citation-form">
             <input 
                 type="text"
-                name="citation"
-                id="citation" 
+                name="text"
+                maxlength="600"
+                id="text"
+                v-model="input_text"
                 placeholder="make your inspitation" 
-                v-model="input_content"
             />
 
-            <h4>Pick a category</h4>
             <div class="options">
-                <label v-for="category in categories" :key="category">
+                <div>
                     <input 
-                    type="radio" 
-                    :name="category" 
-                    :id="category"
-                    :value="category"
+                    type="text" 
+                    name="category" 
+                    id="category"
                     v-model="input_category"
+                    placeholder="Enter a category of citation"
                     />
-                    <span :class="`bubble ${category.toLowerCase()}`"></span>
-					<div>{{ category }}</div>
-                </label>
+                </div>
 
-                <!--exemple category-->
-                <label>
-						<input 
-							type="radio" 
-							name="category" 
-							id="category2" 
-							value="personal"
-							v-model="input_category" />
-						<span class="bubble personal"></span>
-						<div>Personal</div>
-				</label>
             </div>
-            <input type="submit" @click="addCitation()" value="new citation">
-        </form>
+            <button @click="addCitation" :aria-label="buttonText">
+                new citation
+            </button>
+        </div>
     </div>
 </template>
 
+
+
+
 <script setup lang="ts">
 
-import { ref, onMounted, type Ref } from "vue";
+import { ref,computed, type Ref } from "vue";
 
     interface Citation {
-        content: string;
+        text: string;
         category: string | null;
-        categoryClass: string | null;
-        createdAt: number;
     }
 
     const citations: Ref<Citation[]> = ref([]);
-    const categories: Ref<string[]> = ref([]);
-    const input_content: Ref<string> = ref('');
-    const input_category: Ref<string | null> = ref('');
-
-    
+    const input_text = ref('');
+    const input_category = ref('');
+    const buttonText = computed(() => {
+        return `Add a new citation`;
+    });
+        
     const addCitation = async () => {
         try{
-            if (input_content.value.trim() === '' || input_category.value === null) {
-                return;
-            }
-
+            
             const newCitation: Citation = {
-                content: input_content.value,
+                text: input_text.value,
                 category: input_category.value,
-                createdAt: new Date().getTime(),
-                categoryClass: input_category.value?.toLocaleLowerCase() || null,
-}
+            };
+
+            console.log("logs", newCitation);
 
             const result = await fetch('http://localhost:3000/api/citation/add-citation', {
                 method: 'POST',
-                body: JSON.stringify(newCitation),
+                body: JSON.stringify(
+                    {
+                        text: input_text.value,
+                        category: input_category.value,
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
+            console.log("result", result);
             if (result.ok) {
                 citations.value.push(newCitation);
+                console.log("citation added", newCitation);
+                const errorText = await result.text();
+                console.error('failed to add citation', errorText);
             }else{
-                console.error('failed to add citation');
+                console.error('failed to add citation', await result.text());
             }
         }catch(error){
             console.error('error adding citation:', error);
         }
     }
     
-
-    const fetchCategories = async () => {
-        try{
-            const result = await fetch('http://localhost:3000/api/citation/categories');
-            if (result.ok) {
-                const data = await result.json();
-                categories.value = data;
-            }else{
-                console.error("failed to fetch categories");
-            }
-        }catch (error){
-            console.error("error fetching categories:", error);
-        }
-    }
-
-    onMounted(async () => {
-        await fetchCategories();
-    })
 </script>

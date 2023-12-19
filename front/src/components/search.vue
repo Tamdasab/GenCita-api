@@ -3,7 +3,7 @@
         <div class="bar">
             <input 
                 type="text" 
-                class="sabrina"
+                class="inp"
                 v-model="searchTerm"
                 placeholder="search your citation">
         </div>
