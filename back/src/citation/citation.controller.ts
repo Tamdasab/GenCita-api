@@ -27,15 +27,6 @@ export class CitationController{
         }
     };
 
-    async getCategory(): Promise<string[]> {
-        try{
-            const category = await this.citationservice.getCategory()
-            return category;
-        }catch(error){
-            throw error
-        }
-    };
-
     delete(id: number): void{
         if(IdIsNotDefined(id)){
             throw new Error("given id is empty");

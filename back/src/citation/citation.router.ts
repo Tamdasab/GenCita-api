@@ -37,17 +37,6 @@ export class CitationRouter{
             };
         })
 
-        this.router.get('/all-categories', (req, res, next) => {
-            try{
-                this.citationcontroller.getCategory()
-                .then(result => {
-                    res.status(200).json(result);
-                })
-            }catch(error: unknown){
-                next(error);
-            }
-        })
-
         this.router.post('/add-citation', (req, res, next) => {
                 try {
                     const { text, category } = req.body;
