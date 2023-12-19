@@ -30,18 +30,21 @@ export class CitationJSONService implements CitationService{
         
     };
 
-    async getById(id: number): Promise<Citation | null> {
+    async getCategory(): Promise<string[]> {
         try{
-            const citation = await Citation.findByPk(
-                id
-            );
-            console.log("citation found:", citation);
+            const categories = await Citation.findAll({
+                attributes: ['category'],
+                group: ['category'],
+            });
+            console.log("my citations found:", categories);
 
-            return citation ? citation.toJSON() as Citation : null;
-        }catch(error){
+            const arrayCategory = categories.map(c => c.toJSON() as string);
+            return arrayCategory;
+        }catch (error){
             throw error;
         }
-    }
+        
+    };
     
     async delete(id: number): Promise<void> {
         try{

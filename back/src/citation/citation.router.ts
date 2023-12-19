@@ -20,19 +20,6 @@ export class CitationRouter{
             }
         })
 
-        this.router.get('/id/:id', (req, res, next) => {
-            try{
-                this.citationcontroller.getById(
-                    parseInt(req.params.id)
-                ).then(result => {
-                res.status(200).json(result);
-                })
-            }catch(error: unknown){
-                next(error);
-            };
-            
-        })
-
         this.router.get('/category/:category', (req, res, next) => {
             try{
                 const categoryparam = req.params.category;
@@ -46,18 +33,24 @@ export class CitationRouter{
                 })
 
             }catch(error: unknown){
-                //console.error('error in catecory rout', error);
                 next(error);
             };
+        })
+
+        this.router.get('/all-categories', (req, res, next) => {
+            try{
+                this.citationcontroller.getCategory()
+                .then(result => {
+                    res.status(200).json(result);
+                })
+            }catch(error: unknown){
+                next(error);
+            }
         })
 
         this.router.post('/add-citation', (req, res, next) => {
                 try {
                     const { text, category } = req.body;
-                    //if (!text || !category) {
-                    //    throw new Error("text and category are required");
-                    //};
-
                     const result = this.citationcontroller.add(text, category);
                     res.status(201).json(result);
                 } catch (error: unknown) {

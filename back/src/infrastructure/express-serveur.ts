@@ -28,17 +28,16 @@ export class ExpressServer{
 
     private configureCorsPolicy(): void{
         const corsOptions: cors.CorsOptions = {
-            origin: '*',
-            //origin: (origin, callback) => {
-            //    const isOriginAllowed =
-            //        !origin || this.allowedMainOrigin === origin;
-            //    
-            //    if (isOriginAllowed) {
-            //        callback(null, true);
-            //    } else{
-            //        callback(new Error('CORS: Request origin is not allowed'));
-            //    }
-            //},
+            origin: (origin, callback) => {
+                const isOriginAllowed =
+                    !origin || this.allowedMainOrigin === origin;
+                
+                if (isOriginAllowed) {
+                    callback(null, true);
+                } else{
+                    callback(new Error('CORS: Request origin is not allowed'));
+                }
+            },
             methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
             optionsSuccessStatus: 204,
         }
