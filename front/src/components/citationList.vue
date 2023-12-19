@@ -2,15 +2,12 @@
     <div class="citation-list">
         <h3>CITATION LIST</h3>
         <div class="list" id="citation-list">
-            <div v-if="citations.length">
-                <div v-for="citation in citations_asc" :key="citation.id" :class="`citation-item ${citation.done && 'done'}`">
-                    <label>
-                        <input type="checkbox" v-model="citation.done" />
-                        <span :class="`Bubble ${citation.categoryClass}`"></span>
-                    </label>
-
+            <div v-if="citations">
+                <div v-for="citation in citations" :key="citation.id" :class="`citation-item ${citation.done && 'done'}`">
                     <div class="citation-content">
-                        <input type="text" v-model="citation.content" />
+                        <p>
+                            {{ citation.content  }}
+                        </p>
                     </div>
 
                     <div class="actions">
@@ -26,29 +23,33 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, computed, watch, type Ref } from "vue";
+    import { ref, onMounted, defineProps, type Ref } from "vue";
 
     interface Citation{
         content: string;
         category: string | null;
-        categoryClass: string | null;
         createdAt: number;
         done: boolean;
         id: number;
     }
 
-    const citations: Ref<Citation[]> = ref([]);
+    const { citations: propCitations} = defineProps(['citations']);
 
-    const citations_asc = computed(() => citations.value.sort((a, b) => {
-        return a.createdAt - b.createdAt;
-    }))
+    const citations: Ref<Citation[]> = ref(propCitations);
 
-    watch(citations, (updateVal: Citation[]) => {
-        
-    }, {
-        deep: true
-    })
+    
 
+    const fetchCitations = async () => {
+        try{
+            const result = await fetch('http://localhost:3000/api/citation/all-citations');
+            const data = await result.json();
+            citations.value = data;
+        } catch(error){
+            console.error('error fetching citations:', error);
+        }
+    }
+
+    onMounted(fetchCitations);
 
     const removeCitation = async (citation: Citation) => {
         try{
@@ -57,9 +58,9 @@
             })
 
             if (result.ok) {
-                citations.value = citations.value.filter((c: Citation) => c !== citation)
+                citations.value = citations.value.filter((c: Citation) => c !== citation);
             } else{
-                console.error('failed to remove citation')
+                console.error('failed to remove citation');
             }
 
         } catch(error){

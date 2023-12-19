@@ -52,15 +52,17 @@ export class CitationRouter{
         })
 
         this.router.post('/add-citation', (req, res, next) => {
-            try{
-                this.citationcontroller.add(
-                    req.body.text, req.body.category
-                    ).then(result => {
+                try {
+                    const { text, category } = req.body;
+                    //if (!text || !category) {
+                    //    throw new Error("text and category are required");
+                    //};
+
+                    const result = this.citationcontroller.add(text, category);
                     res.status(201).json(result);
-                })
-            }catch(error: unknown){
-                next(error);
-            }
+                } catch (error: unknown) {
+                    next(error);
+                };
         })
 
         this.router.delete('/:id', (req, res, next) => {
